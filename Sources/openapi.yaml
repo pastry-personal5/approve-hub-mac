@@ -1,0 +1,730 @@
+openapi: 3.1.0
+info:
+  title: ApproveHub API
+  version: 1.0.0
+  description: |
+    Canonical Phase 1 contract. Requests and idempotency records live only for the
+    current service process lifetime. Clients must fail closed when the service
+    disappears or an authenticated operation cannot be completed.
+servers:
+  - url: http://127.0.0.1:46931
+    description: Fixed loopback listener for the Mac release.
+security: []
+tags:
+  - name: Identity
+  - name: Requester
+  - name: Decider
+paths:
+  /v1/identity/proofs:
+    post:
+      tags: [Identity]
+      operationId: createIdentityProof
+      summary: Prove the pinned service identity for one fresh challenge.
+      description: |
+        Unauthenticated. The client generates a new 32-byte CSPRNG challenge
+        for each later bearer-bearing operation, including retries. It verifies
+        the proof against its independently installed pin and uses the challenge
+        only once, within 60 seconds. A request carrying Origin is rejected.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IdentityProofRequest'
+      responses:
+        '200':
+          description: Signed proof for the supplied challenge.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IdentityProof'
+        '400':
+          $ref: '#/components/responses/MalformedChallenge'
+        '403':
+          $ref: '#/components/responses/OriginRejected'
+  /v1/requester/requests:
+    post:
+      tags: [Requester]
+      operationId: createRequest
+      summary: Create an ordinary pending request.
+      description: |
+        The authenticated requester's owner-assigned stable name is used in the
+        snapshot and digest; the caller cannot supply it. A repeated key with
+        the same input returns the original snapshot. A changed input with the
+        same key returns idempotency_key_reused. Keys live only for this service
+        lifetime. Sensitive requests are rejected before becoming pending.
+      security:
+        - requesterBearer: []
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        $ref: '#/components/requestBodies/CreateRequest'
+      responses:
+        '201':
+          $ref: '#/components/responses/CreatedRequest'
+        '400':
+          $ref: '#/components/responses/MalformedRequest'
+        '401':
+          $ref: '#/components/responses/Unauthenticated'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '409':
+          $ref: '#/components/responses/IdempotencyConflict'
+        '422':
+          $ref: '#/components/responses/RejectedRequest'
+        '429':
+          $ref: '#/components/responses/PendingLimit'
+  /v1/requester/requests:submit-and-wait:
+    post:
+      tags: [Requester]
+      operationId: submitAndWaitForRequest
+      summary: Create a request and hold until its terminal outcome.
+      description: |
+        The server holds this call until approved, denied, expired, or cancelled.
+        If the connection fails, the requester blocks its action; it may retry
+        with the same Idempotency-Key after verifying a new service proof. No
+        separate 30-second step limit applies to this operation. This operation
+        returns a terminal snapshot on success.
+      security:
+        - requesterBearer: []
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        $ref: '#/components/requestBodies/CreateRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/CurrentRequest'
+        '400':
+          $ref: '#/components/responses/MalformedRequest'
+        '401':
+          $ref: '#/components/responses/Unauthenticated'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '409':
+          $ref: '#/components/responses/IdempotencyConflict'
+        '422':
+          $ref: '#/components/responses/RejectedRequest'
+        '429':
+          $ref: '#/components/responses/PendingLimit'
+  /v1/requester/requests/{requestID}:wait:
+    post:
+      tags: [Requester]
+      operationId: waitForRequest
+      summary: Wait up to 30 seconds for a request's state.
+      description: |
+        Returns the current full snapshot when terminal or when waitSeconds
+        elapses. A pending snapshot is not approval. Repeating a wait on a
+        terminal request returns its unchanged terminal snapshot. Absent,
+        cross-requester, and restart-lost IDs all return request_not_found.
+      security:
+        - requesterBearer: []
+      parameters:
+        - $ref: '#/components/parameters/RequestID'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WaitRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/CurrentRequest'
+        '400':
+          $ref: '#/components/responses/MalformedRequest'
+        '401':
+          $ref: '#/components/responses/Unauthenticated'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/RequestNotFound'
+  /v1/requester/requests/{requestID}:
+    delete:
+      tags: [Requester]
+      operationId: cancelRequest
+      summary: Cancel an owned pending request.
+      description: |
+        A terminal request stays terminal. Repeated cancellation returns its
+        current snapshot. Absent, cross-requester, and restart-lost IDs return
+        the same request_not_found response.
+      security:
+        - requesterBearer: []
+      parameters:
+        - $ref: '#/components/parameters/RequestID'
+      responses:
+        '200':
+          $ref: '#/components/responses/CurrentRequest'
+        '400':
+          $ref: '#/components/responses/MalformedRequest'
+        '401':
+          $ref: '#/components/responses/Unauthenticated'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/RequestNotFound'
+  /v1/decider/requests:
+    get:
+      tags: [Decider]
+      operationId: listPendingRequests
+      summary: Get the pending list and a matching event cursor.
+      description: |
+        The list is an atomic snapshot of at most 100 pending requests, newest
+        first. eventCursor denotes the event position immediately after that
+        snapshot; pass it as Last-Event-ID to the event stream to avoid a
+        list-to-stream race. If replay is unavailable, refresh this list.
+      security:
+        - deciderBearer: []
+      responses:
+        '200':
+          description: Pending snapshots and resumable event cursor.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PendingRequestList'
+        '401':
+          $ref: '#/components/responses/Unauthenticated'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /v1/decider/requests/{requestID}:decide:
+    post:
+      tags: [Decider]
+      operationId: decideRequest
+      summary: Approve or deny the exact immutable request.
+      description: |
+        The service compares the supplied digest with its stored digest before
+        attempting a transition. The first terminal transition wins. A later
+        decision with a matching digest returns the current terminal snapshot
+        without changing it, even if the later choice differs.
+      security:
+        - deciderBearer: []
+      parameters:
+        - $ref: '#/components/parameters/RequestID'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DecisionRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/CurrentRequest'
+        '400':
+          $ref: '#/components/responses/MalformedRequest'
+        '401':
+          $ref: '#/components/responses/Unauthenticated'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/RequestNotFound'
+        '409':
+          $ref: '#/components/responses/DigestMismatch'
+  /v1/decider/events:
+    get:
+      tags: [Decider]
+      operationId: streamDeciderEvents
+      summary: Stream decider-only request changes.
+      description: |
+        Each SSE frame has an opaque id, event name request.created or
+        request.terminal, and a data field containing one JSON RequestSnapshot.
+        A created event carries a pending snapshot; a terminal event carries
+        the resulting terminal snapshot. Events are ordered and replayed after
+        Last-Event-ID, inclusive of events arriving after a pending-list
+        snapshot. Without that header, streaming starts at the current event
+        position. Cursors are scoped to the service lifetime. If the supplied
+        cursor was lost or is unknown, return event_cursor_unavailable rather
+        than silently starting at the current position. Refresh the list and
+        reconnect with its new cursor. No requester event stream exists.
+      security:
+        - deciderBearer: []
+      parameters:
+        - name: Last-Event-ID
+          in: header
+          required: false
+          description: Opaque cursor from a pending list or prior SSE frame.
+          schema:
+            type: string
+            minLength: 1
+      responses:
+        '200':
+          description: Ordered SSE frames with full request snapshots.
+          content:
+            text/event-stream:
+              schema:
+                type: string
+                description: UTF-8 Server-Sent Events stream.
+              example: |
+                id: cursor-42
+                event: request.created
+                data: {"id":"550e8400-e29b-41d4-a716-446655440000","requesterName":"Build Agent","actionType":"run-command","text":"Run the test suite","sensitive":false,"requestedExpirySeconds":120,"createdAt":"2026-10-08T00:00:00Z","expiresAt":"2026-10-08T00:02:00Z","state":"pending","digest":"sha256:elaCJEQKavqDo4s2JkECjeMpE1GK_cAm13-k_OmNn0A"}
+
+        '401':
+          $ref: '#/components/responses/Unauthenticated'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '409':
+          $ref: '#/components/responses/CursorUnavailable'
+components:
+  securitySchemes:
+    requesterBearer:
+      type: http
+      scheme: bearer
+      description: |
+        Requester credential. Before every operation bearing this token, verify
+        a fresh service proof against the independently installed pin. Never
+        send this token to an unverified listener. Origin is always rejected.
+    deciderBearer:
+      type: http
+      scheme: bearer
+      description: |
+        Separate decider credential. Before every operation bearing it, verify
+        a fresh service proof against the independently installed pin. Origin
+        is always rejected. This credential never grants requester scope.
+  parameters:
+    IdempotencyKey:
+      name: Idempotency-Key
+      in: header
+      required: true
+      description: |
+        Opaque retry key, scoped to authenticated requester and current service
+        lifetime. Reuse with the same input returns the original request;
+        reuse with changed input returns idempotency_key_reused.
+      schema:
+        type: string
+        minLength: 1
+        maxLength: 128
+    RequestID:
+      name: requestID
+      in: path
+      required: true
+      description: Opaque service-assigned UUID; it conveys no authority.
+      schema:
+        type: string
+        format: uuid
+  requestBodies:
+    CreateRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreateRequest'
+          examples:
+            ordinary:
+              summary: Ordinary request with default expiry.
+              value:
+                actionType: run-command
+                text: Run the test suite
+                sensitive: false
+            rejectedSensitive:
+              summary: Sensitive flag causes a 422 response, never a pending request.
+              value:
+                actionType: read-secret
+                text: Read the signing secret
+                sensitive: true
+  responses:
+    CreatedRequest:
+      description: Full newly created pending snapshot.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RequestSnapshot'
+    CurrentRequest:
+      description: Full current request snapshot.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RequestSnapshot'
+    MalformedChallenge:
+      description: Malformed or incorrectly sized challenge.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+          example:
+            type: urn:approvehub:problem:malformed_challenge
+            title: Malformed challenge
+            status: 400
+            code: malformed_challenge
+    MalformedRequest:
+      description: Malformed input or a missing or malformed Idempotency-Key.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+          examples:
+            malformedInput:
+              value:
+                type: urn:approvehub:problem:malformed_input
+                title: Malformed input
+                status: 400
+                code: malformed_input
+            missingKey:
+              value:
+                type: urn:approvehub:problem:missing_idempotency_key
+                title: Missing idempotency key
+                status: 400
+                code: missing_idempotency_key
+    Unauthenticated:
+      description: Bearer credential absent, invalid, or revoked.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+          example:
+            type: urn:approvehub:problem:unauthenticated
+            title: Unauthenticated
+            status: 401
+            code: unauthenticated
+    OriginRejected:
+      description: A request carrying Origin is forbidden, including proof requests.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+          example:
+            type: urn:approvehub:problem:origin_rejected
+            title: Origin rejected
+            status: 403
+            code: origin_rejected
+    Forbidden:
+      description: Wrong role or Origin header present.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+          examples:
+            wrongRole:
+              value:
+                type: urn:approvehub:problem:wrong_role
+                title: Wrong role
+                status: 403
+                code: wrong_role
+            originRejected:
+              value:
+                type: urn:approvehub:problem:origin_rejected
+                title: Origin rejected
+                status: 403
+                code: origin_rejected
+    RequestNotFound:
+      description: Request absent, owned by another requester, or lost on restart.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+          example:
+            type: urn:approvehub:problem:request_not_found
+            title: Request not found
+            status: 404
+            code: request_not_found
+    IdempotencyConflict:
+      description: The key was already used for different request input.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+          example:
+            type: urn:approvehub:problem:idempotency_key_reused
+            title: Idempotency key reused
+            status: 409
+            code: idempotency_key_reused
+    DigestMismatch:
+      description: Decision digest does not match the stored immutable request.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+          example:
+            type: urn:approvehub:problem:digest_mismatch
+            title: Digest mismatch
+            status: 409
+            code: digest_mismatch
+    CursorUnavailable:
+      description: Replay cursor unknown, lost, or from a former service process.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+          example:
+            type: urn:approvehub:problem:event_cursor_unavailable
+            title: Event cursor unavailable
+            status: 409
+            code: event_cursor_unavailable
+    RejectedRequest:
+      description: Sensitive request or unsafe submitted text rejected before persistence.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+          examples:
+            sensitive:
+              summary: Sensitive request rejected before entering the pending list.
+              value:
+                type: urn:approvehub:problem:sensitive_request_not_supported
+                title: Sensitive request not supported
+                status: 422
+                code: sensitive_request_not_supported
+            unsafeText:
+              value:
+                type: urn:approvehub:problem:unsafe_request_text
+                title: Unsafe request text
+                status: 422
+                code: unsafe_request_text
+    PendingLimit:
+      description: Already 100 requests pending; retry after the advised delay.
+      headers:
+        Retry-After:
+          description: Seconds before a requester should retry with the same key.
+          schema:
+            type: integer
+            minimum: 1
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+          example:
+            type: urn:approvehub:problem:pending_request_limit_reached
+            title: Pending request limit reached
+            status: 429
+            code: pending_request_limit_reached
+  schemas:
+    Base64URL32:
+      type: string
+      pattern: '^[A-Za-z0-9_-]{43}$'
+      description: Unpadded Base64url encoding of exactly 32 bytes; decode and check length.
+    Base64URL64:
+      type: string
+      pattern: '^[A-Za-z0-9_-]{86}$'
+      description: Unpadded Base64url encoding of exactly 64 bytes; decode and check length.
+    IdentityProofRequest:
+      type: object
+      additionalProperties: false
+      required: [challenge]
+      properties:
+        challenge:
+          $ref: '#/components/schemas/Base64URL32'
+    IdentityProofPayload:
+      type: object
+      additionalProperties: false
+      required: [protocol, listener, keyID, challenge, issuedAt, expiresAt]
+      description: |
+        These six fields, with exactly these JSON names and no others, are
+        RFC 8785-canonicalized as UTF-8 and signed by the service key. expiresAt
+        is no more than 60 seconds after issuedAt.
+      properties:
+        protocol:
+          type: string
+          const: approvehub-service-proof-v1
+        listener:
+          type: string
+          const: http://127.0.0.1:46931
+        keyID:
+          $ref: '#/components/schemas/Base64URL32'
+          description: SHA-256 of the raw pinned Ed25519 public key.
+        challenge:
+          $ref: '#/components/schemas/Base64URL32'
+        issuedAt:
+          type: string
+          format: date-time
+        expiresAt:
+          type: string
+          format: date-time
+    IdentityProof:
+      type: object
+      additionalProperties: false
+      required: [payload, signature]
+      properties:
+        payload:
+          $ref: '#/components/schemas/IdentityProofPayload'
+        signature:
+          $ref: '#/components/schemas/Base64URL64'
+          description: Raw Ed25519 signature of the canonical UTF-8 payload.
+    CreateRequest:
+      type: object
+      additionalProperties: false
+      required: [actionType, text, sensitive]
+      properties:
+        actionType:
+          type: string
+          minLength: 1
+          maxLength: 128
+          description: Non-empty caller action type, matched exactly.
+        text:
+          type: string
+          maxLength: 16384
+          x-maxUtf8Bytes: 16384
+          description: |
+            Submitted text, at most 16,384 UTF-8 bytes (not scalar or grapheme
+            count). The server checks the byte length and rejects deceptive
+            Unicode or suspected secrets before persistence.
+        sensitive:
+          type: boolean
+          description: True is rejected with sensitive_request_not_supported.
+        sessionID:
+          type: string
+          minLength: 1
+          maxLength: 256
+          description: Optional opaque caller session identifier.
+        expirySeconds:
+          type: integer
+          format: int64
+          minimum: 1
+          default: 120
+          description: |
+            Requested lifetime; omitted means 120 seconds. Values above 600
+            are accepted but the effective deadline is capped at 600 seconds.
+    WaitRequest:
+      type: object
+      additionalProperties: false
+      required: [waitSeconds]
+      properties:
+        waitSeconds:
+          type: integer
+          minimum: 1
+          maximum: 30
+          description: Maximum duration of this stepwise wait.
+    DecisionDigest:
+      type: string
+      pattern: '^sha256:[A-Za-z0-9_-]{43}$'
+      description: |
+        SHA-256 of RFC 8785 canonical UTF-8 JSON encoded as unpadded Base64url,
+        prefixed with sha256:. The canonical object has exactly these keys:
+        id, requesterName, actionType, text, sensitive, sessionID (JSON null
+        when absent), createdAt, expiresAt. Timestamps are the exact RFC 3339
+        strings in the snapshot. The requesterName is authenticated and
+        owner-assigned; neither the caller nor decider can replace it.
+    DecisionRequest:
+      type: object
+      additionalProperties: false
+      required: [decision, digest]
+      properties:
+        decision:
+          type: string
+          enum: [approved, denied]
+        digest:
+          $ref: '#/components/schemas/DecisionDigest'
+    RequestSnapshot:
+      type: object
+      additionalProperties: false
+      examples:
+        - id: 550e8400-e29b-41d4-a716-446655440000
+          requesterName: Build Agent
+          actionType: run-command
+          text: Run the test suite
+          sensitive: false
+          requestedExpirySeconds: 120
+          createdAt: '2026-10-08T00:00:00Z'
+          expiresAt: '2026-10-08T00:02:00Z'
+          state: pending
+          digest: sha256:elaCJEQKavqDo4s2JkECjeMpE1GK_cAm13-k_OmNn0A
+      required:
+        - id
+        - requesterName
+        - actionType
+        - text
+        - sensitive
+        - requestedExpirySeconds
+        - createdAt
+        - expiresAt
+        - state
+        - digest
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Opaque service-assigned request ID.
+        requesterName:
+          type: string
+          minLength: 1
+          description: Stable owner-assigned name from the authenticated credential.
+        actionType:
+          type: string
+          minLength: 1
+          maxLength: 128
+        text:
+          type: string
+          maxLength: 16384
+          x-maxUtf8Bytes: 16384
+          description: Unmodified submitted text, capped at 16 KiB UTF-8.
+        sensitive:
+          type: boolean
+          description: Always false in an accepted Phase 1 snapshot.
+        sessionID:
+          type: string
+          minLength: 1
+          maxLength: 256
+          description: Omitted when not supplied; digest uses JSON null.
+        requestedExpirySeconds:
+          type: integer
+          format: int64
+          minimum: 1
+          description: Original requested lifetime, 120 when omitted; it may exceed 600.
+        createdAt:
+          type: string
+          format: date-time
+        expiresAt:
+          type: string
+          format: date-time
+          description: |
+            Effective deadline: createdAt plus the lesser of
+            requestedExpirySeconds and 600 seconds.
+        resolvedAt:
+          type: string
+          format: date-time
+          description: Present only in a terminal snapshot.
+        state:
+          type: string
+          enum: [pending, approved, denied, expired, cancelled]
+        digest:
+          $ref: '#/components/schemas/DecisionDigest'
+    PendingRequestList:
+      type: object
+      additionalProperties: false
+      required: [requests, eventCursor]
+      properties:
+        requests:
+          type: array
+          maxItems: 100
+          description: Pending snapshots only, newest first.
+          items:
+            $ref: '#/components/schemas/RequestSnapshot'
+        eventCursor:
+          type: string
+          minLength: 1
+          description: Opaque cursor valid for Last-Event-ID, even for an empty list.
+    Problem:
+      type: object
+      additionalProperties: true
+      required: [type, title, status, code]
+      description: |
+        RFC 9457 Problem Details. type is always
+        urn:approvehub:problem:<code>; code is stable and machine-readable.
+        detail and instance, if present, are diagnostic only. Clients use
+        status and code for behavior, never title or detail.
+      properties:
+        type:
+          type: string
+          pattern: '^urn:approvehub:problem:[a-z][a-z0-9_]*$'
+        title:
+          type: string
+        status:
+          type: integer
+          minimum: 400
+          maximum: 599
+        detail:
+          type: string
+        instance:
+          type: string
+        code:
+          type: string
+          enum:
+            - malformed_challenge
+            - malformed_input
+            - missing_idempotency_key
+            - origin_rejected
+            - unauthenticated
+            - wrong_role
+            - request_not_found
+            - digest_mismatch
+            - sensitive_request_not_supported
+            - unsafe_request_text
+            - idempotency_key_reused
+            - event_cursor_unavailable
+            - pending_request_limit_reached

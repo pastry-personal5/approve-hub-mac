@@ -1,0 +1,9 @@
+generate:
+  - client
+accessModifier: public
+namingStrategy: idiomatic
+additionalImports:
+  - ApproveHubContract
+additionalFileComments:
+  - "swift-format-ignore-file"
+  - "swiftlint:disable all"

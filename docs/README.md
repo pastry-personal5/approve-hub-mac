@@ -21,7 +21,8 @@ This index lists the design and process docs, one line each. Read only the doc y
 | [phase-1/milestone-02-architecture.md](phase-1/milestone-02-architecture.md) | Completed P1-M2 technical approach. |
 | [phase-1/milestone-03-overview.md](phase-1/milestone-03-overview.md) | Completed P1-M3 core release design scope and acceptance evidence. |
 | [phase-1/milestone-03-architecture.md](phase-1/milestone-03-architecture.md) | Completed P1-M3 owner-approved UX, credentials, and service-identity design. |
-| [phase-1/milestone-04-overview.md](phase-1/milestone-04-overview.md) | Planned P1-M4 API contract and acceptance evidence. |
+| [phase-1/milestone-04-overview.md](phase-1/milestone-04-overview.md) | Completed P1-M4 API contract scope and acceptance evidence. |
+| [phase-1/milestone-04-architecture.md](phase-1/milestone-04-architecture.md) | P1-M4 canonical API approach, digest, operations, errors, and verification. |
 | [phase-1/milestone-05-overview.md](phase-1/milestone-05-overview.md) | Planned P1-M5 request lifecycle and acceptance evidence. |
 | [phase-1/milestone-06-overview.md](phase-1/milestone-06-overview.md) | Planned P1-M6 identity, credentials, owner CLI, and acceptance evidence. |
 | [phase-1/milestone-07-overview.md](phase-1/milestone-07-overview.md) | Planned P1-M7 service API and acceptance evidence. |

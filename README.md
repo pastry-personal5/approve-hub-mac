@@ -2,7 +2,7 @@
 
 A Mac app for approving what your AI agents ask to do. AI asks. You decide. Your agent continues.
 
-The Mac client and local ApproveHub Service are currently SwiftPM skeletons. See [product behavior](docs/product-behavior.md) and [architecture](docs/architecture.md).
+The Mac client and local ApproveHub Service are currently SwiftPM skeletons. Their canonical `/v1` API is [Sources/openapi.yaml](Sources/openapi.yaml); SwiftPM generates the shared types and client/server bindings at build time. See [product behavior](docs/product-behavior.md) and [architecture](docs/architecture.md).
 
 Requires macOS 26 or later. Licensed under [Apache-2.0](LICENSE).
 

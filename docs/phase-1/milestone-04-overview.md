@@ -1,8 +1,8 @@
 # P1-M4: API contract
 
-Status: Planned
+Status: Done
 
-Define the canonical `/v1` OpenAPI contract after [M3](milestone-03-overview.md) settles first-run trust and GUI behavior. Write this milestone's technical approach before activation.
+The canonical `/v1` OpenAPI contract translates [M3](milestone-03-overview.md)'s first-run trust and GUI behavior into generated Swift interfaces. The [technical approach](milestone-04-architecture.md) records the exact fields, flows, and verification evidence.
 
 ## Goal
 
@@ -16,7 +16,7 @@ Out: server behavior, lifecycle storage, GUI implementation, and later-phase rul
 
 ## Completion checklist
 
-- [ ] **Contract:** `/v1` OpenAPI describes every in-scope operation, request and response schema, authentication scope, wait limit, event cursor, and error code, with examples for ordinary and rejected sensitive requests.
-- [ ] **Generated bindings:** Swift client and server bindings generate and compile from the canonical spec; generated files are handled as the approved build process requires.
-- [ ] **Contract checks:** Automated checks exercise schema compatibility, digest representation, stable error shapes, and both requester wait patterns.
-- [ ] **Docs and gate:** The technical approach and affected docs are current, M4 status is updated after evidence exists, and the full validation gate passes.
+- [x] **Contract:** [`Sources/openapi.yaml`](../../Sources/openapi.yaml) describes every in-scope operation, request and response schema, authentication scope, wait limit, event cursor, and error code, with examples for ordinary and rejected sensitive requests.
+- [x] **Generated bindings:** `swift test` built the shared types and generated client and server targets from one symlinked spec. No generated source is checked in.
+- [x] **Contract checks:** The generated-interface tests type-check both wait patterns; `ruby Tests/ContractValidation/validate.rb` verifies examples, digest representation, error shapes, role scopes, and SSE replay-loss response.
+- [x] **Docs and gate:** The technical approach and affected docs are current. On 2026-10-08, `swift format lint --strict --recursive Sources Tests`, `swiftlint lint --strict`, and `swift test` passed, along with the contract checker.

@@ -38,7 +38,8 @@ let package = Package(
       name: "ApproveHubContract",
       dependencies: [
         .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
-      ]
+      ],
+      plugins: [.plugin(name: "OpenAPIGenerator", package: "swift-openapi-generator")]
     ),
     .target(name: "ApproveHubCore", dependencies: ["ApproveHubContract"]),
     .executableTarget(
@@ -48,7 +49,8 @@ let package = Package(
         "ApproveHubCore",
         .product(name: "Hummingbird", package: "hummingbird"),
         .product(name: "OpenAPIHummingbird", package: "swift-openapi-hummingbird"),
-      ]
+      ],
+      plugins: [.plugin(name: "OpenAPIGenerator", package: "swift-openapi-generator")]
     ),
     .executableTarget(
       name: "ApproveHub",
@@ -57,8 +59,18 @@ let package = Package(
         "ApproveHubCore",
         .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
         .product(name: "OpenAPIURLSession", package: "swift-openapi-urlsession"),
-      ]
+      ],
+      plugins: [.plugin(name: "OpenAPIGenerator", package: "swift-openapi-generator")]
     ),
     .testTarget(name: "ApproveHubCoreTests", dependencies: ["ApproveHubCore"]),
+    .testTarget(
+      name: "ApproveHubContractTests",
+      dependencies: [
+        "ApproveHubContract",
+        "ApproveHub",
+        "ApproveHubService",
+        .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
+      ]
+    ),
   ]
 )

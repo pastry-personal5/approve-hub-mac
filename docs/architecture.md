@@ -2,7 +2,7 @@
 
 Status: Active
 
-ApproveHub is a macOS consent service for cooperative agents. This document records the approved component architecture and distinguishes the [early Phase 1 release](phase-1/phase-1.md) from later approved capabilities. It defines boundaries and behavior, not endpoint schemas. The current SwiftPM targets are skeletons; [P1-M3](phase-1/milestone-03-overview.md) approved the first-run trust path before implementation.
+ApproveHub is a macOS consent service for cooperative agents. This document records the approved component architecture and distinguishes the [early Phase 1 release](phase-1/phase-1.md) from later approved capabilities. The [canonical OpenAPI contract](../Sources/openapi.yaml) owns endpoint schemas. The current SwiftPM targets are service and GUI skeletons with generated bindings; [P1-M3](phase-1/milestone-03-overview.md) approved the first-run trust path before implementation.
 
 ## Components and boundaries
 
@@ -42,7 +42,7 @@ stateDiagram-v2
   cancelled --> [*]
 ```
 
-A decision must carry the request identifier and the RFC 8785 canonical-JSON SHA-256 digest of the original, immutable request. The service checks the digest against its stored request, rejects a mismatch, and returns the current state to later decision attempts. The OpenAPI contract must define the exact digested fields and digest encoding when endpoint schemas are designed.
+A decision must carry the request identifier and the RFC 8785 canonical-JSON SHA-256 digest of the original, immutable request. The service checks the digest against its stored request, rejects a mismatch, and returns the current state to later decision attempts. The [M4 technical approach](phase-1/milestone-04-architecture.md#digest-and-examples) and [canonical schema](../Sources/openapi.yaml) define the exact fields and encoding.
 
 Phase 1 accepts only ordinary requests. It rejects a request flagged sensitive before it becomes pending; it has no rules, session grants, or decided history. Pending requests and their outcomes are deliberately dropped at service restart, and a requester whose wait is interrupted must fail closed.
 
@@ -50,9 +50,9 @@ Later phases retain the approved sensitive-request and session-grant goals in [p
 
 ## API shape
 
-The API is HTTP/JSON below `/v1`. [P1-M4](phase-1/milestone-04-overview.md) defines endpoint schemas after M3 resolves the trust protocol. The versioned OpenAPI document is the canonical contract. Swift OpenAPI Generator will produce shared types plus server and client bindings from that document.
+The API is HTTP/JSON below `/v1`. [P1-M4](phase-1/milestone-04-overview.md) established [`Sources/openapi.yaml`](../Sources/openapi.yaml) as the canonical OpenAPI 3.1 contract. The pinned Swift OpenAPI Generator build plugin produces shared public types in `ApproveHubContract`, a client in `ApproveHub`, and a server interface in `ApproveHubService` from that single document. Its operation security declarations describe the wire contract; M6–M7 enforce proof verification, bearer injection, role authorization, and `Origin` rejection at the transport boundary.
 
-SSE supplies live updates. Event identifiers support bounded in-memory replay through `Last-Event-ID`, subject to the caller's role and request scope. The API must signal when a cursor cannot be replayed. After a service restart or a replay-buffer miss, clients refresh authoritative state and reconnect; the event stream is not the source of truth. Errors use RFC 9457 Problem Details with stable, documented machine-readable error codes; clients must not infer behavior from prose.
+Decider-only SSE supplies live updates. The pending list returns an event cursor captured with its snapshots, and `Last-Event-ID` resumes the stream from that position without a list-to-stream race. A lost cursor returns `409 event_cursor_unavailable`. After a service restart or replay-buffer miss, the GUI refreshes authoritative state and reconnects; the event stream is not the source of truth. Errors use RFC 9457 Problem Details with the stable codes in the [M4 error table](phase-1/milestone-04-architecture.md#errors); clients must not infer behavior from prose.
 
 ## Security model
 
@@ -87,7 +87,7 @@ Hook shims, host-app adapters, and channel relays for Claude Code and Codex CLI 
 | `ApproveHubService` | Service executable plus HTTP, credential persistence, Keychain, and logging adapters; later rules and history storage. |
 | `ApproveHub` | SwiftUI macOS client plus API client and Keychain adapters; later notification and biometric adapters. |
 
-`ApproveHubContract` is the sharing point for the service, Mac GUI, and future iOS client. The current package deliberately declares no endpoints and does not run the generator plugin yet; that happens when endpoint design begins. The executable skeletons contain no server or GUI implementation.
+`ApproveHubContract` is the sharing point for the service, Mac GUI, and future iOS client. The package now runs the generator plugin in all three API-facing targets, with target-local symlinks to the single source spec and target-specific configurations. Generated files are build outputs only. The executable skeletons still contain no server or GUI behavior.
 
 ## Concurrency and errors
 
@@ -115,6 +115,6 @@ The package selection, platform implications, and license evidence are in [resea
 
 ## Test strategy
 
-Phase 1 coverage is layered: unit tests for lifecycle transitions, expiry, first-decision-wins races, sensitive rejection, and digest mismatches; service tests for token scope, identity verification before credential disclosure, credential persistence, and port-collision failure; and HTTP/SSE tests for Problem Details, role-scoped event delivery, replay, and refresh after replay loss or restart. Grant exclusion, rules, history migration, and retention tests belong with their later features.
+Phase 1 coverage is layered: M4 contract checks compile generated interfaces and validate examples, digest representation, errors, and replay declarations; M5 adds unit tests for lifecycle transitions, expiry, first-decision-wins races, sensitive rejection, and digest mismatches; M6–M7 add service tests for token scope, identity verification before credential disclosure, credential persistence, and port-collision failure, plus HTTP/SSE tests for Problem Details, role-scoped event delivery, replay, and refresh after replay loss or restart. Grant exclusion, rules, history migration, and retention tests belong with their later features.
 
 A minimal Xcode XCTest/XCUIAutomation host is scaffolded for bundled-app end-to-end coverage. Its placeholder is replaced with a running requester-to-GUI-to-requester test by P1-M10; Phase 1 does not depend on biometric or notification adapters. Real Touch ID and notification authorization are later manual checks. The [local validation gate](contribution-guide.md#required-validation) applies; no CI or scheduled local job was added in P1-M2.

@@ -38,9 +38,9 @@ Plan: [overview](milestone-03-overview.md), [architecture](milestone-03-architec
 Notes: Owner-approved design and interview record are in the [phase changelog](changelog.md).
 
 ### P1-M4: API contract
-Status: Planned
+Status: Done
 Goal: Define and verify the `/v1` contract for identity, requester and decider operations, events, and errors.
-Plan: [overview](milestone-04-overview.md); technical approach before activation.
+Plan: [overview](milestone-04-overview.md), [architecture](milestone-04-architecture.md)
 
 ### P1-M5: Request lifecycle
 Status: Planned
