@@ -1,21 +1,9 @@
-# approve-hub-mac
+# ApproveHub
 
-ApproveHub is a secure app for approving what your AI agents ask to do, written in Swift.
+A Mac app for approving what your AI agents ask to do. AI asks. You decide. Your agent continues.
 
-**AI asks. You decide. Your agent continues.**
+The Mac client and local ApproveHub Service are currently SwiftPM skeletons. See [product behavior](docs/product-behavior.md) and [architecture](docs/architecture.md).
 
-ApproveHub’s Mac client communicates with the local **ApproveHub Service**. The
-service architecture and its current implementation boundaries are documented in
-[docs/architecture.md](docs/architecture.md).
+Requires macOS 26 or later. Licensed under [Apache-2.0](LICENSE).
 
-## Requirements
-
-macOS 26 or later.
-
-## License
-
-Licensed under the Apache-2.0 license. See [LICENSE](LICENSE).
-
-## Contributing
-
-Contributors and AI agents: see [AGENTS.md](AGENTS.md) and [docs/contribution-guide.md](docs/contribution-guide.md).
+For setup and contributions, see the [contribution guide](docs/contribution-guide.md). Coding agents start with [AGENTS.md](AGENTS.md).

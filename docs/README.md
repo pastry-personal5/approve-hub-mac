@@ -2,12 +2,12 @@
 
 Status: Active
 
-This index lists the design and process docs, one line each. Read only the doc you need. The rules for writing docs are in [AGENTS.md](../AGENTS.md) under "Documentation".
+This index lists the design and process docs, one line each. Read only the doc you need. The rules for writing docs are in the [contribution guide](contribution-guide.md#documentation).
 
 | Doc | What it covers |
 |-----|----------------|
 | [development-process.md](development-process.md) | Phases, milestones, IDs (`P1-M2`), definition of done, where plans live, and doc status values. |
-| [contribution-guide.md](contribution-guide.md) | Local setup, required validation, commit message style, and pull request conventions. |
+| [contribution-guide.md](contribution-guide.md) | Contributor and agent workflow, setup, code and documentation rules, validation, and review conventions. |
 | [product-behavior.md](product-behavior.md) | Product scope: what the app does and what it deliberately does not do. |
 | [architecture.md](architecture.md) | Approved component boundaries, hosting, security, persistence, package layout, and test strategy. |
 | [ux-terms.md](ux-terms.md) | Canonical component names for UI text, with their code-facing identifiers. |

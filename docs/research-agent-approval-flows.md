@@ -124,8 +124,7 @@ Treat fail-closed behavior as the requesting app's responsibility, and treat App
 
 ## Open questions
 
-- Should ApproveHub ship agent adapters (A or B above), or only the API that custom apps call? This is already in AGENTS.md "Undecided".
-- Is it acceptable that an agent falls back to its own approval flow when ApproveHub is unreachable? Or must the shim deny, which makes ApproveHub a single point of failure for the agent?
+- Which mechanism should owner-written adapters use first? ApproveHub ships only the API, and adapter style remains in [AGENTS.md](../AGENTS.md#undecided--ask-before-inventing).
 - Should ApproveHub support only first-party-documented mechanisms (hooks, `--permission-prompt-tool`, `canUseTool`, app-server) and treat ACP, channels and PTY wrapping as later options?
 - Untested here: interactive-session behavior of a failed hook (documented but not run), the Codex app-server's behavior when a client never answers, and the Codex human-reviewer fall-through.
 - The owner's default Codex reviewer is `Unverified`. It matters only for interpreting the Codex failure runs.

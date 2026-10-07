@@ -74,7 +74,7 @@ Each row is a floor that some choice imposes. All values are from the sources ab
 | `hummingbird-websocket` or `swift-openapi-hummingbird` | macOS 14 |
 | swift-openapi-runtime with the URLSession client | macOS 10.15 (streaming bodies: macOS 12) |
 
-The build host needs the Swift 6 toolchain from AGENTS.md, which is separate from the deployment target. Hosting model B or C needs macOS 13. Adding `swift-openapi-hummingbird` or `hummingbird-websocket` raises the floor to macOS 14.
+The build host needs the Swift toolchain in the [contribution guide](contribution-guide.md#setup-and-development), which is separate from the deployment target. Hosting model B or C needs macOS 13. Adding `swift-openapi-hummingbird` or `hummingbird-websocket` raises the floor to macOS 14.
 
 ## Options
 
