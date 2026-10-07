@@ -2,15 +2,15 @@
 
 Status: Active
 
-What iOS allows and limits for an approval client (push delivery, background execution, the local network permission and discovery), and what the ApproveHub API would need to offer so an iOS app can work within them. Written for [P1-M1](archive/phases/phase-1/milestone-01-overview.md) topic 6. It is a survey only: Phase 1 builds no iOS app, and nothing here is tested on a phone.
+What iOS allows and limits for an approval client (push delivery, background execution, the local network permission and discovery), and what the ApproveHub API would need to offer so an iOS app can work within them. Written for [P1-M1](phase-1/milestone-01-overview.md) topic 6. It is a survey only: Phase 1 builds no iOS app, and nothing here is tested on a phone.
 
-Accepted by the owner on 2026-10-07 as the record of what was found. Where an owner decision in the [Phase 1 changelog](archive/phases/phase-1/changelog.md) conflicts with a recommendation here, the decision wins.
+Accepted by the owner on 2026-10-07 as the record of what was found. Where an owner decision in the [Phase 1 changelog](phase-1/changelog.md) conflicts with a recommendation here, the decision wins.
 
 ## Method
 
 - **Sources:** Apple's documentation data, read on 2026-10-07 and listed under "Sources", plus the earlier research notes for the agent side.
 - **Experiments:** none. No iOS device or simulator was used.
-- **Scope assumptions** (owner decisions of 2026-10-07, see [the milestone overview](archive/phases/phase-1/milestone-01-overview.md)): the iOS app is a client that lives outside this repo, one owner decides on their own devices, and remote access is researched both ways.
+- **Scope assumptions** (owner decisions of 2026-10-07, see [the milestone overview](phase-1/milestone-01-overview.md)): the iOS app is a client that lives outside this repo, one owner decides on their own devices, and remote access is researched both ways.
 - **Marking:** `Unverified` marks a claim without a primary source. "Design reasoning" marks my own inference.
 
 ## Questions

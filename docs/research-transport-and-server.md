@@ -2,9 +2,9 @@
 
 Status: Active
 
-Which wire protocol and which Swift server stack could carry the ApproveHub API between requesting apps, the Mac GUI and an iOS app. Written for [P1-M1](archive/phases/phase-1/milestone-01-overview.md) topic 3. It lists options with evidence; it adds no dependency to the repo, and any dependency needs the owner's approval in P1-M2.
+Which wire protocol and which Swift server stack could carry the ApproveHub API between requesting apps, the Mac GUI and an iOS app. Written for [P1-M1](phase-1/milestone-01-overview.md) topic 3. It lists options with evidence; it adds no dependency to the repo, and any dependency needs the owner's approval in P1-M2.
 
-Accepted by the owner on 2026-10-07 as the record of what was found. Where an owner decision in the [Phase 1 changelog](archive/phases/phase-1/changelog.md) conflicts with a recommendation here, the decision wins.
+Accepted by the owner on 2026-10-07 as the record of what was found. Where an owner decision in the [Phase 1 changelog](phase-1/changelog.md) conflicts with a recommendation here, the decision wins.
 
 ## Method
 

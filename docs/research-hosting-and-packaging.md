@@ -2,9 +2,9 @@
 
 Status: Active
 
-Where the ApproveHub API server could run (inside the GUI app or as a separate background process), how a SwiftPM-only project becomes a macOS app, and what signing, sandbox and notarization require. Written for [P1-M1](archive/phases/phase-1/milestone-01-overview.md) topic 4. It lists options with evidence and decides nothing; P1-M2 decides.
+Where the ApproveHub API server could run (inside the GUI app or as a separate background process), how a SwiftPM-only project becomes a macOS app, and what signing, sandbox and notarization require. Written for [P1-M1](phase-1/milestone-01-overview.md) topic 4. It lists options with evidence and decides nothing; P1-M2 decides.
 
-Accepted by the owner on 2026-10-07 as the record of what was found. Where an owner decision in the [Phase 1 changelog](archive/phases/phase-1/changelog.md) conflicts with a recommendation here, the decision wins.
+Accepted by the owner on 2026-10-07 as the record of what was found. Where an owner decision in the [Phase 1 changelog](phase-1/changelog.md) conflicts with a recommendation here, the decision wins.
 
 ## Method
 

@@ -9,8 +9,12 @@ Agent entry point for `approve-hub-mac`. Leave the `CLAUDE.md` import stub uncha
 
 ## Decided — do not change without asking
 
-- **Product:** [product behavior](docs/product-behavior.md) and [Phase 1 decisions](docs/archive/phases/phase-1/changelog.md).
+- **Product:** [product behavior](docs/product-behavior.md), [active Phase 1 scope](docs/phase-1/phase-1.md), and [Phase 1 decisions](docs/phase-1/changelog.md).
 - **Architecture and dependencies:** [architecture](docs/architecture.md).
+- **First-run trust:** the owner-approved bootstrap, pin distribution,
+  Ed25519 proof, recovery, and rotation path is in
+  [architecture](docs/architecture.md#service-identity-pins-and-credentials).
+- **Later sensitive approvals:** the selected request-bound, Touch ID-protected signing-proof direction is recorded in the [request lifecycle](docs/architecture.md#request-lifecycle-and-state-machine); Phase 1 rejects sensitive requests.
 - **Interface:** [GUI behavior](docs/ux-gui.md), [terms](docs/ux-terms.md), and [layout](docs/ux-information-architecture.md).
 - **Stack, licensing, and build process:** [contribution guide](docs/contribution-guide.md).
 
@@ -20,5 +24,3 @@ Record open product and architecture questions here, and ask before building on 
 
 - **Agent integration style:** deferred until integrations are planned; see [agent-flow research](docs/research-agent-approval-flows.md).
 - **Exposure and iOS:** route, pairing, and deployment floor deferred until an iOS client is planned; see [security](docs/research-security-and-exposure.md) and [iOS](docs/research-ios-client.md) research.
-- **Local service identity:** how clients verify the listener before sending credentials; see [hosting](docs/architecture.md#hosting-model).
-- **Sensitive-decision proof:** how Touch ID is evidenced to the service; see [request lifecycle](docs/architecture.md#request-lifecycle-and-state-machine).

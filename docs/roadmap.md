@@ -6,4 +6,4 @@ Every phase, one line each. This is the only place that says which phase is acti
 
 | ID | Title | Status | Doc |
 |----|-------|--------|-----|
-| P1 | Foundation | Done | [phase-1](archive/phases/phase-1/phase-1.md) |
+| P1 | Core Mac approvals | Active | [phase-1](phase-1/phase-1.md) |

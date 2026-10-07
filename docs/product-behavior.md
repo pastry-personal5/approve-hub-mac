@@ -2,7 +2,13 @@
 
 Status: Active
 
-Product scope: what the app does and what it deliberately does not do. Accepted by the owner on 2026-10-07 from the P1-M1 interview and research. The decisions and their dates are in the [Phase 1 changelog](archive/phases/phase-1/changelog.md).
+Product scope: what the app does and what it deliberately does not do. Accepted by the owner on 2026-10-07 from the P1-M1 interview and research. The decisions and their dates are in the [Phase 1 changelog](phase-1/changelog.md).
+
+## Early Mac release
+
+[Phase 1](phase-1/phase-1.md) delivers the first usable requester-to-owner loop: the owner registers a requesting app, leaves a single Mac approval window open to see ordinary pending requests, approves or denies them, and the requester receives the outcome. The window is an inbox: newest requests appear first with immediate row actions and full immutable detail when selected. The owner CLI adds, lists, and revokes requester credentials and exports the service public-key pin; it is not an agent adapter. Explicit local setup creates the service identity and GUI credential. Clients verify a fresh service signature against their trusted pin before every bearer-bearing request; pin changes and unknown listeners fail closed.
+
+Phase 1 has no notification or menu-bar alert. Rules, session grants, history, and Touch ID approval are approved later goals below. The service rejects a sensitive-flagged request rather than treating it as ordinary. Pending requests and outcomes do not survive a service restart, so requesters fail closed if their wait is interrupted. The later history and rules persistence described below applies only when those features are implemented.
 
 ## What ApproveHub is
 
@@ -47,15 +53,15 @@ ApproveHub is a Mac app for approving what your AI agents ask to do. AI asks. Yo
 ## Deciding
 
 - **Who may decide.** Only a deciding client can approve or deny. A requesting app can create, wait on and cancel its own requests, and can never decide.
-- **Alerting.** When a request arrives, ApproveHub shows a macOS notification with Approve and Deny, and a badge in the menu bar until the request is handled.
+- **Later alerting.** When implemented, a request arrival shows a macOS notification with Approve and Deny, and a badge in the menu bar until the request is handled.
 - **Approving on the Mac.** A click approves a request.
-- **Sensitive requests.** A sensitive request requires Touch ID, however it is approved. A request is sensitive if the owner's rules say so or if the requesting app flags it. A rule matches a requesting app or an action type and nothing else, and only marks requests as sensitive.
+- **Later sensitive requests.** Once supported, a sensitive request requires Touch ID however it is approved. A request is sensitive if the owner's rules say so or if the requesting app flags it. A rule matches a requesting app or an action type and nothing else, and only marks requests as sensitive. Phase 1 rejects a request flagged sensitive.
 - **Approvals never change a request.** The owner approves or denies exactly what was asked. A decision is tied to the exact request: it names a digest of the request, and the server rejects a decision whose digest does not match.
-- **Approve for the session.** The owner can approve a requesting app's action type for the session. A later request from the same requesting app with the same action type is then approved without asking. Each request carries a session id from the requesting app, and the app may send an explicit end call. A grant ends at that call or after 1 hour, whichever comes first. A request approved by a grant is recorded in the history, marked as approved by grant and with its full text, and does not notify the owner. A sensitive request is never approved by a grant, and a grant is never created from one.
+- **Later session grants.** The owner can approve a requesting app's action type for the session. A later request from the same requesting app with the same action type is then approved without asking. Each request carries a session id from the requesting app, and the app may send an explicit end call. A grant ends at that call or after 1 hour, whichever comes first. A request approved by a grant is recorded in the history, marked as approved by grant and with its full text, and does not notify the owner. A sensitive request is never approved by a grant, and a grant is never created from one.
 
 ## History
 
-ApproveHub keeps decided requests with their full request text, the outcome and the time. Entries older than 90 days are removed automatically, and the owner can clear the history at any time. After a server restart the history and the owner's rules remain. Pending requests and session grants are dropped.
+When history is implemented, ApproveHub keeps decided requests with their full request text, the outcome and the time. Entries older than 90 days are removed automatically, and the owner can clear the history at any time. After a server restart the history and the owner's rules remain. Pending requests and session grants are dropped. In Phase 1, outcomes are transient and no history is kept.
 
 ## Not in scope for now
 

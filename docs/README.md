@@ -14,12 +14,21 @@ This index lists the design and process docs, one line each. Read only the doc y
 | [ux-information-architecture.md](ux-information-architecture.md) | The Standard Layout: how the app's components contain one another. |
 | [ux-gui.md](ux-gui.md) | Current interface and owner-approved GUI behavior, with planned behavior kept separate. |
 | [roadmap.md](roadmap.md) | Every phase, one line each, and which phase is active. |
-| [archive/phases/phase-1/phase-1.md](archive/phases/phase-1/phase-1.md) | Archived Phase 1, Foundation: goal, exit criteria, and milestones. |
-| [archive/phases/phase-1/milestone-01-overview.md](archive/phases/phase-1/milestone-01-overview.md) | Archived P1-M1 research scope and completion checklist. |
-| [archive/phases/phase-1/milestone-01-architecture.md](archive/phases/phase-1/milestone-01-architecture.md) | Archived P1-M1 technical approach. |
-| [archive/phases/phase-1/milestone-02-overview.md](archive/phases/phase-1/milestone-02-overview.md) | Archived P1-M2 architecture scope and completion checklist. |
-| [archive/phases/phase-1/milestone-02-architecture.md](archive/phases/phase-1/milestone-02-architecture.md) | Archived P1-M2 technical approach. |
-| [archive/phases/phase-1/changelog.md](archive/phases/phase-1/changelog.md) | Archived Phase 1 decisions, owner calls, and design changes. |
+| [phase-1/phase-1.md](phase-1/phase-1.md) | Active Phase 1, Core Mac approvals: goal, exit criteria, release boundary, and milestones. |
+| [phase-1/milestone-01-overview.md](phase-1/milestone-01-overview.md) | Completed P1-M1 research scope and completion evidence. |
+| [phase-1/milestone-01-architecture.md](phase-1/milestone-01-architecture.md) | Completed P1-M1 technical approach. |
+| [phase-1/milestone-02-overview.md](phase-1/milestone-02-overview.md) | Completed P1-M2 architecture scope and completion evidence. |
+| [phase-1/milestone-02-architecture.md](phase-1/milestone-02-architecture.md) | Completed P1-M2 technical approach. |
+| [phase-1/milestone-03-overview.md](phase-1/milestone-03-overview.md) | Completed P1-M3 core release design scope and acceptance evidence. |
+| [phase-1/milestone-03-architecture.md](phase-1/milestone-03-architecture.md) | Completed P1-M3 owner-approved UX, credentials, and service-identity design. |
+| [phase-1/milestone-04-overview.md](phase-1/milestone-04-overview.md) | Planned P1-M4 API contract and acceptance evidence. |
+| [phase-1/milestone-05-overview.md](phase-1/milestone-05-overview.md) | Planned P1-M5 request lifecycle and acceptance evidence. |
+| [phase-1/milestone-06-overview.md](phase-1/milestone-06-overview.md) | Planned P1-M6 identity, credentials, owner CLI, and acceptance evidence. |
+| [phase-1/milestone-07-overview.md](phase-1/milestone-07-overview.md) | Planned P1-M7 service API and acceptance evidence. |
+| [phase-1/milestone-08-overview.md](phase-1/milestone-08-overview.md) | Planned P1-M8 Mac approval window and acceptance evidence. |
+| [phase-1/milestone-09-overview.md](phase-1/milestone-09-overview.md) | Planned P1-M9 bundle and launch and acceptance evidence. |
+| [phase-1/milestone-10-overview.md](phase-1/milestone-10-overview.md) | Planned P1-M10 early-release acceptance and closeout. |
+| [phase-1/changelog.md](phase-1/changelog.md) | Active Phase 1 decisions, owner calls, and design changes. |
 | [research-agent-approval-flows.md](research-agent-approval-flows.md) | How Claude Code and Codex CLI raise approvals, where a third-party app can intercept or connect, and how each fails. |
 | [research-request-decision-interaction.md](research-request-decision-interaction.md) | What an approval request and decision carry, and how a requesting app gets the decision, with prior art. |
 | [research-transport-and-server.md](research-transport-and-server.md) | Wire protocol and Swift server options for the API, with package facts and a hold-open and event-stream spike. |

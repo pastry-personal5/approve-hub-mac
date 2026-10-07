@@ -2,17 +2,34 @@
 
 Status: Active
 
-This document is reserved for the Standard Layout: the conceptual containment
-model for the app. It records structure only; visual and interaction rules are
-in [ux-gui.md](ux-gui.md).
+This document defines the Standard Layout: the conceptual containment model
+for the early-release app. Visual and interaction rules are in
+[ux-gui.md](ux-gui.md).
 
-## Current status
+## Standard Layout
 
-No information architecture is approved yet. It must be designed with the GUI
-behavior and use the canonical component vocabulary in [ux-terms.md](ux-terms.md).
+```text
+ApproveHub Window
+├── Window State
+├── Request List
+│   └── Request Row*
+│       ├── Request Title
+│       ├── Request Preview
+│       └── Row Decision Controls
+└── Request Detail
+    ├── Request Metadata
+    ├── Request Content
+    ├── Detail Decision Controls
+    └── Inline State or Error Message
+```
 
-## Planned content
+The Window State owns Connecting, No Pending Requests, Disconnected, Setup
+Required, and Identity Error presentation. Request List owns ordering and
+selection of pending requests. Request Detail owns presentation of the selected
+immutable request and its No Longer Available or Request Error content.
 
-When approved, describe parent-child containment, navigation boundaries and
-which component owns each app state. Keep product requirements in
-[product-behavior.md](product-behavior.md) rather than duplicating them here.
+Only Request List and Request Detail contain decision controls. They ask the
+API client to decide; they do not hold policy or alter request content. The
+GUI client owns connection, verified-service identity, decider credential, and
+event-stream state. The service remains the source of truth for every request
+and decision.

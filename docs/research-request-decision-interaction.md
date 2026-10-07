@@ -2,9 +2,9 @@
 
 Status: Active
 
-How a requesting app submits an approval request to ApproveHub and gets the decision back, and what the request and the decision must carry. Written for [P1-M1](archive/phases/phase-1/milestone-01-overview.md) topic 2, building on [the agent flow findings](research-agent-approval-flows.md). It lists requirements and options for the API; it does not define endpoints, which is a later milestone.
+How a requesting app submits an approval request to ApproveHub and gets the decision back, and what the request and the decision must carry. Written for [P1-M1](phase-1/milestone-01-overview.md) topic 2, building on [the agent flow findings](research-agent-approval-flows.md). It lists requirements and options for the API; it does not define endpoints, which is a later milestone.
 
-Accepted by the owner on 2026-10-07 as the record of what was found. Where an owner decision in the [Phase 1 changelog](archive/phases/phase-1/changelog.md) conflicts with a recommendation here, the decision wins.
+Accepted by the owner on 2026-10-07 as the record of what was found. Where an owner decision in the [Phase 1 changelog](phase-1/changelog.md) conflicts with a recommendation here, the decision wins.
 
 ## Method
 
@@ -84,7 +84,7 @@ Details that constrain the first three:
 ### 5. Several deciding clients
 
 - **Existing behavior to match.** Claude Code's channel relay lets the terminal and a remote channel both answer, applies whichever arrives first and drops the other. With several Codex hooks, any `deny` wins, otherwise an `allow` proceeds. [Channels reference](https://code.claude.com/docs/en/channels-reference.md), [Codex hooks](https://learn.chatgpt.com/docs/hooks.md)
-- **Scope here.** The owner decided on 2026-10-07 that one person decides, on their own devices ([changelog](archive/phases/phase-1/changelog.md)). That makes "first decision wins" sufficient and rules out quorum or roles.
+- **Scope here.** The owner decided on 2026-10-07 that one person decides, on their own devices ([changelog](phase-1/changelog.md)). That makes "first decision wins" sufficient and rules out quorum or roles.
 - **What the API must still do:** answer a late decision with the current state (already decided, expired, or cancelled) instead of silently overwriting, and tell every other deciding client that the request is resolved so its UI updates.
 
 ### 6. Prior art summary

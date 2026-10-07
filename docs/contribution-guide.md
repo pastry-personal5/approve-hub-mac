@@ -66,8 +66,9 @@ swift test
 ## Bundled-app E2E host
 
 `E2E/ApproveHubE2E.xcodeproj` is the minimal XCTest/XCUIAutomation host for
-the bundled-app suite. It reserves injected biometric and notification ports;
-the test is skipped until those adapters and the bundle launcher exist.
+the bundled-app suite. Its current placeholder is skipped; [P1-M10](phase-1/milestone-10-overview.md)
+requires a running requester-to-GUI-to-requester test. The reserved biometric
+and notification ports are for later features and do not block that test.
 
 After building the app bundle, run the host manually:
 
