@@ -42,7 +42,7 @@ List open product and architecture questions here as they come up, and ask befor
 
 ## Environment setup
 
-- macOS with a Swift 6 toolchain (Xcode 16 or later), which provides `swift build`, `swift test` and `swift format`
+- macOS with a Swift 6.2 toolchain (Xcode 26 or later), which provides `swift build`, `swift test` and `swift format`
 - SwiftLint (`brew install swiftlint`)
 
 ## Commands

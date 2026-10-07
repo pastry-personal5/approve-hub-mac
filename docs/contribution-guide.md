@@ -6,7 +6,7 @@ How to set up `approve-hub-mac`, validate a change, write commit messages, and o
 
 ## Setup and development
 
-- macOS with a Swift 6 toolchain (Xcode 16 or later), which provides `swift build`, `swift test` and `swift format`
+- macOS with a Swift 6.2 toolchain (Xcode 26 or later), which provides `swift build`, `swift test` and `swift format`
 - SwiftLint (`brew install swiftlint`)
 
 ```sh
@@ -47,4 +47,12 @@ Keep each commit focused. Example:
 
 ## Pull requests
 
-TBD
+When changes are proposed through a pull request, keep it focused and include:
+
+- a short description of the user or maintenance impact;
+- the relevant tests and documentation updates; and
+- the result of the required validation commands, or the exact reason a command
+  could not run.
+
+Do not add dependencies, build tools, or decisions listed as undecided in
+[AGENTS.md](../AGENTS.md) without the owner’s approval.
