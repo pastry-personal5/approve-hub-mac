@@ -2,7 +2,7 @@
 
 Status: Active
 
-Product scope: what the app does and what it deliberately does not do. Accepted by the owner on 2026-10-07 from the P1-M1 interview and research. The decisions and their dates are in the [Phase 1 changelog](phase-1/changelog.md).
+Product scope: what the app does and what it deliberately does not do. Accepted by the owner on 2026-10-07 from the P1-M1 interview and research. The decisions and their dates are in the [Phase 1 changelog](archive/phases/phase-1/changelog.md).
 
 ## What ApproveHub is
 

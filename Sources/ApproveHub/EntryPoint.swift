@@ -1,4 +1,6 @@
+import SwiftUI
+
 @main
-struct EntryPoint {
+struct ApproveHubApplication {
   static func main() {}
 }

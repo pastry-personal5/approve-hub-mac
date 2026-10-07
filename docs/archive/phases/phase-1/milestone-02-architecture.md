@@ -1,6 +1,6 @@
 # P1-M2: Software Architecture, technical approach
 
-Status: Planned
+Status: Archived
 
 How the decisions and the doc in [milestone-02-overview.md](milestone-02-overview.md) get made. The result lives in `docs/architecture.md`, not here, so this doc describes the process only.
 

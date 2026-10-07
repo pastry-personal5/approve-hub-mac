@@ -1,6 +1,6 @@
 # P1-M2: Software Architecture
 
-Status: Planned
+Status: Done
 
 Decide ApproveHub's architecture from the P1-M1 research, name the API server, and record it in `docs/architecture.md`. The technical approach is in [milestone-02-architecture.md](milestone-02-architecture.md); the phase is [phase-1.md](phase-1.md).
 
@@ -23,7 +23,7 @@ Out:
 
 - The endpoint-level API spec. It is a later milestone that is not planned yet. This milestone decides transport style, auth model and versioning only.
 - Implementing the server, any client, any adapter or the iOS app.
-- Interaction design. [ux-gui.md](../ux-gui.md) and the other UX docs stay with the owner.
+- Interaction design. [ux-gui.md](../../../ux-gui.md) and the other UX docs stay with the owner.
 
 Starts after P1-M1 is `Done`, because it decides what P1-M1 researched.
 
@@ -45,11 +45,11 @@ Starts after P1-M1 is `Done`, because it decides what P1-M1 researched.
 
 Check an item only after its evidence exists.
 
-- [ ] **Server name:** two or three candidates are proposed with rationale, and the owner picks one. Evidence: the name is under "Decided" in AGENTS.md, in `docs/architecture.md`, and in [changelog.md](changelog.md). It contains no `phase` or `MVP`.
-- [ ] **Undecided items:** each is decided or explicitly deferred. Evidence: AGENTS.md "Undecided" holds only deferred items, each with a reason and the owner's approval. The rest are under "Decided", and the changelog has one entry per decision.
-- [ ] **Architecture doc:** Evidence: `docs/architecture.md` exists, is indexed in [docs/README.md](../README.md), has every required section, and each choice links to a P1-M1 note or a "Decided" item.
-- [ ] **Dependencies:** Evidence: each proposed dependency or build tool is listed with its license and Apache-2.0 compatibility and has the owner's approval in the changelog. If none is needed, the architecture doc says so.
-- [ ] **Skeleton matches the layout:** Evidence: the target layout in `Package.swift` matches the architecture doc. Any restructure was approved by the owner first and is logged.
-- [ ] **Owner review:** Evidence: the owner accepts `docs/architecture.md`, and the acceptance is logged in [changelog.md](changelog.md).
-- [ ] **Gate:** Evidence: `swift format lint --strict --recursive Sources Tests`, `swiftlint lint --strict` and `swift test` all pass.
-- [ ] **Docs:** Evidence: AGENTS.md "Decided" and "Undecided" are current, README.md is updated if user-visible facts changed, and the P1-M2 status is updated in [phase-1.md](phase-1.md).
+- [x] **Server name:** the owner selected **ApproveHub Service**. Evidence: [AGENTS.md](../../../../AGENTS.md), [architecture.md](../../../architecture.md), and [changelog.md](changelog.md). It contains no prohibited source-code term.
+- [x] **Undecided items:** each is decided or explicitly deferred. Evidence: AGENTS.md "Undecided" holds only owner-approved deferred items, with reasons; the remaining decisions are in [architecture.md](../../../architecture.md) and the changelog.
+- [x] **Architecture doc:** Evidence: [architecture.md](../../../architecture.md) is indexed in [docs/README.md](../../../README.md), has every required section, and links to the P1-M1 research.
+- [x] **Dependencies:** Evidence: [architecture.md](../../../architecture.md) lists every direct dependency, version, license compatibility, and owner approval in the changelog.
+- [x] **Skeleton matches the layout:** Evidence: `Package.swift` has the contract, core, service, and SwiftUI app targets described in [architecture.md](../../../architecture.md). The owner approved the restructure in the changelog.
+- [x] **Owner review:** Evidence: the owner accepted [architecture.md](../../../architecture.md), logged in [changelog.md](changelog.md).
+- [x] **Gate:** Evidence: `swift format lint --strict --recursive Sources Tests`, `swiftlint lint --strict`, and `swift test` passed on 2026-10-08.
+- [x] **Docs:** Evidence: AGENTS.md "Decided" and "Undecided" are current, README.md documents the service architecture, and P1-M2 is marked done in [phase-1.md](phase-1.md).

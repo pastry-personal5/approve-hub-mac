@@ -14,7 +14,7 @@ In:
 
 - Six research topics, each written up as a note in `docs/` (listed below).
 - A list of open architecture choices in AGENTS.md "Undecided".
-- A proposal for the text of [product-behavior.md](../product-behavior.md).
+- A proposal for the text of [product-behavior.md](../../../product-behavior.md).
 - A minimal SwiftPM skeleton.
 
 Out:
@@ -74,7 +74,7 @@ Terms used in the notes: a *requesting app* is a custom app that submits approva
 
 Check an item only after its evidence exists.
 
-- [x] **Topic 1 note:** Evidence: `docs/research-agent-approval-flows.md` exists, is indexed in [docs/README.md](../README.md), answers every question above with a cited source, and follows the note template in [milestone-01-architecture.md](milestone-01-architecture.md) (Questions, Findings, Options, Recommendation, Open questions, Sources, plus a short Method section).
+- [x] **Topic 1 note:** Evidence: `docs/research-agent-approval-flows.md` exists, is indexed in [docs/README.md](../../../README.md), answers every question above with a cited source, and follows the note template in [milestone-01-architecture.md](milestone-01-architecture.md) (Questions, Findings, Options, Recommendation, Open questions, Sources, plus a short Method section).
 - [x] **Topic 2 note:** Evidence: `docs/research-request-decision-interaction.md`, same criteria.
 - [x] **Topic 3 note:** Evidence: `docs/research-transport-and-server.md`, same criteria.
 - [x] **Topic 4 note:** Evidence: `docs/research-hosting-and-packaging.md`, same criteria.
@@ -85,4 +85,4 @@ Check an item only after its evidence exists.
 - [x] **Skeleton:** a SwiftPM package with one executable target, one test target and no third-party dependencies. Evidence: `swift build` succeeds, and `swift test` runs at least one test and passes.
 - [x] **Gate:** Evidence: `swift format lint --strict --recursive Sources Tests`, `swiftlint lint --strict` and `swift test` all pass.
 - [x] **Owner review:** Evidence: the owner accepts each note, and the acceptance is logged in [changelog.md](changelog.md).
-- [x] **Docs:** Evidence: every new doc is indexed in [docs/README.md](../README.md), the P1-M1 status is updated in [phase-1.md](phase-1.md), and README.md is updated if the skeleton changes the build steps.
+- [x] **Docs:** Evidence: every new doc is indexed in [docs/README.md](../../../README.md), the P1-M1 status is updated in [phase-1.md](phase-1.md), and README.md is updated if the skeleton changes the build steps.

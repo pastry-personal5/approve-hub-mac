@@ -45,5 +45,5 @@ A note's status moves to `Active` when the owner accepts it. It is archived once
 
 ## Constraints
 
-- The stack, license and "ask before" rules in [AGENTS.md](../../AGENTS.md) apply. The research may list candidate dependencies, but adding one needs the owner's approval, and none is added in this milestone.
+- The stack, license and "ask before" rules in [AGENTS.md](../../../../AGENTS.md) apply. The research may list candidate dependencies, but adding one needs the owner's approval, and none is added in this milestone.
 - Keep each fact in one place. Notes link to each other and to the overview instead of copying.

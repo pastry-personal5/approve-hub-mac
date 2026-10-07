@@ -1,0 +1,71 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		4DE991070000000000000011 /* ApproveHubE2EHost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DE991070000000000000021 /* ApproveHubE2EHost.swift */; };
+		4DE991070000000000000012 /* ApproveHubE2ETests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DE991070000000000000022 /* ApproveHubE2ETests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		4DE991070000000000000021 /* ApproveHubE2EHost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApproveHubE2EHost.swift; sourceTree = "<group>"; };
+		4DE991070000000000000022 /* ApproveHubE2ETests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApproveHubE2ETests.swift; sourceTree = "<group>"; };
+		4DE991070000000000000023 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4DE991070000000000000024 /* ApproveHubE2EHost.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ApproveHubE2EHost.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4DE991070000000000000025 /* ApproveHubE2ETests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ApproveHubE2ETests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		4DE991070000000000000031 /* Frameworks */ = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+		4DE991070000000000000032 /* Frameworks */ = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		4DE991070000000000000041 = {isa = PBXGroup; children = (4DE991070000000000000042 /* ApproveHubE2EHost */, 4DE991070000000000000043 /* ApproveHubE2ETests */, 4DE991070000000000000044 /* Products */); sourceTree = "<group>"; };
+		4DE991070000000000000042 /* ApproveHubE2EHost */ = {isa = PBXGroup; children = (4DE991070000000000000021 /* ApproveHubE2EHost.swift */, 4DE991070000000000000023 /* Info.plist */); path = ApproveHubE2EHost; sourceTree = "<group>"; };
+		4DE991070000000000000043 /* ApproveHubE2ETests */ = {isa = PBXGroup; children = (4DE991070000000000000022 /* ApproveHubE2ETests.swift */); path = ApproveHubE2ETests; sourceTree = "<group>"; };
+		4DE991070000000000000044 /* Products */ = {isa = PBXGroup; children = (4DE991070000000000000024 /* ApproveHubE2EHost.app */, 4DE991070000000000000025 /* ApproveHubE2ETests.xctest */); name = Products; sourceTree = "<group>"; };
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		4DE991070000000000000001 /* ApproveHubE2EHost */ = {isa = PBXNativeTarget; buildConfigurationList = 4DE991070000000000000051 /* Build configuration list for PBXNativeTarget \"ApproveHubE2EHost\" */; buildPhases = (4DE991070000000000000061 /* Sources */, 4DE991070000000000000031 /* Frameworks */); buildRules = (); dependencies = (); name = ApproveHubE2EHost; productName = ApproveHubE2EHost; productReference = 4DE991070000000000000024 /* ApproveHubE2EHost.app */; productType = "com.apple.product-type.application"; };
+		4DE991070000000000000002 /* ApproveHubE2ETests */ = {isa = PBXNativeTarget; buildConfigurationList = 4DE991070000000000000052 /* Build configuration list for PBXNativeTarget \"ApproveHubE2ETests\" */; buildPhases = (4DE991070000000000000062 /* Sources */, 4DE991070000000000000032 /* Frameworks */); buildRules = (); dependencies = (4DE991070000000000071 /* PBXTargetDependency */); name = ApproveHubE2ETests; productName = ApproveHubE2ETests; productReference = 4DE991070000000000000025 /* ApproveHubE2ETests.xctest */; productType = "com.apple.product-type.bundle.ui-testing"; };
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		4DE991070000000000000000 /* Project object */ = {isa = PBXProject; attributes = { LastSwiftUpdateCheck = 2610; LastUpgradeCheck = 2610; TargetAttributes = { 4DE991070000000000000001 = { CreatedOnToolsVersion = 26.1.1; }; 4DE991070000000000000002 = { CreatedOnToolsVersion = 26.1.1; TestTargetID = 4DE991070000000000000001; }; }; }; buildConfigurationList = 4DE991070000000000000050 /* Build configuration list for PBXProject \"ApproveHubE2E\" */; compatibilityVersion = "Xcode 16.0"; developmentRegion = en; hasScannedForEncodings = 0; knownRegions = (en, Base); mainGroup = 4DE991070000000000000041; productRefGroup = 4DE991070000000000000044 /* Products */; projectDirPath = ""; projectRoot = ""; targets = (4DE991070000000000000001 /* ApproveHubE2EHost */, 4DE991070000000000000002 /* ApproveHubE2ETests */); };
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		4DE991070000000000000061 /* Sources */ = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (4DE991070000000000000011 /* ApproveHubE2EHost.swift in Sources */); runOnlyForDeploymentPostprocessing = 0; };
+		4DE991070000000000000062 /* Sources */ = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (4DE991070000000000000012 /* ApproveHubE2ETests.swift in Sources */); runOnlyForDeploymentPostprocessing = 0; };
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		4DE991070000000000000071 /* PBXTargetDependency */ = {isa = PBXTargetDependency; target = 4DE991070000000000000001 /* ApproveHubE2EHost */; targetProxy = 4DE991070000000000000072 /* PBXContainerItemProxy */; };
+/* End PBXTargetDependency section */
+
+/* Begin PBXContainerItemProxy section */
+		4DE991070000000000000072 /* PBXContainerItemProxy */ = {isa = PBXContainerItemProxy; containerPortal = 4DE991070000000000000000 /* Project object */; proxyType = 1; remoteGlobalIDString = 4DE991070000000000000001; remoteInfo = ApproveHubE2EHost; };
+/* End PBXContainerItemProxy section */
+
+/* Begin XCBuildConfiguration section */
+		4DE991070000000000000081 /* Debug */ = {isa = XCBuildConfiguration; buildSettings = { ALWAYS_SEARCH_USER_PATHS = NO; MACOSX_DEPLOYMENT_TARGET = 26.0; SWIFT_VERSION = 6.0; }; name = Debug; };
+		4DE991070000000000000082 /* Release */ = {isa = XCBuildConfiguration; buildSettings = { ALWAYS_SEARCH_USER_PATHS = NO; MACOSX_DEPLOYMENT_TARGET = 26.0; SWIFT_VERSION = 6.0; }; name = Release; };
+		4DE991070000000000000083 /* Debug */ = {isa = XCBuildConfiguration; buildSettings = { CODE_SIGNING_ALLOWED = NO; GENERATE_INFOPLIST_FILE = NO; INFOPLIST_FILE = ApproveHubE2EHost/Info.plist; MACOSX_DEPLOYMENT_TARGET = 26.0; PRODUCT_BUNDLE_IDENTIFIER = com.approvehub.e2e-host; PRODUCT_NAME = "$(TARGET_NAME)"; SWIFT_VERSION = 6.0; }; name = Debug; };
+		4DE991070000000000000084 /* Release */ = {isa = XCBuildConfiguration; buildSettings = { CODE_SIGNING_ALLOWED = NO; GENERATE_INFOPLIST_FILE = NO; INFOPLIST_FILE = ApproveHubE2EHost/Info.plist; MACOSX_DEPLOYMENT_TARGET = 26.0; PRODUCT_BUNDLE_IDENTIFIER = com.approvehub.e2e-host; PRODUCT_NAME = "$(TARGET_NAME)"; SWIFT_VERSION = 6.0; }; name = Release; };
+		4DE991070000000000000085 /* Debug */ = {isa = XCBuildConfiguration; buildSettings = { CODE_SIGNING_ALLOWED = NO; MACOSX_DEPLOYMENT_TARGET = 26.0; PRODUCT_BUNDLE_IDENTIFIER = com.approvehub.e2e-tests; PRODUCT_NAME = "$(TARGET_NAME)"; SWIFT_VERSION = 6.0; TEST_TARGET_NAME = ApproveHubE2EHost; }; name = Debug; };
+		4DE991070000000000000086 /* Release */ = {isa = XCBuildConfiguration; buildSettings = { CODE_SIGNING_ALLOWED = NO; MACOSX_DEPLOYMENT_TARGET = 26.0; PRODUCT_BUNDLE_IDENTIFIER = com.approvehub.e2e-tests; PRODUCT_NAME = "$(TARGET_NAME)"; SWIFT_VERSION = 6.0; TEST_TARGET_NAME = ApproveHubE2EHost; }; name = Release; };
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		4DE991070000000000000050 /* Build configuration list for PBXProject \"ApproveHubE2E\" */ = {isa = XCConfigurationList; buildConfigurations = (4DE991070000000000000081 /* Debug */, 4DE991070000000000000082 /* Release */); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+		4DE991070000000000000051 /* Build configuration list for PBXNativeTarget \"ApproveHubE2EHost\" */ = {isa = XCConfigurationList; buildConfigurations = (4DE991070000000000000083 /* Debug */, 4DE991070000000000000084 /* Release */); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+		4DE991070000000000000052 /* Build configuration list for PBXNativeTarget \"ApproveHubE2ETests\" */ = {isa = XCConfigurationList; buildConfigurations = (4DE991070000000000000085 /* Debug */, 4DE991070000000000000086 /* Release */); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+/* End XCConfigurationList section */
+	};
+	rootObject = 4DE991070000000000000000 /* Project object */;
+}

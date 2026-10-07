@@ -2,9 +2,9 @@
 
 Status: Active
 
-How Claude Code and Codex CLI raise an approval, how they block and resume, and where a third-party app can intercept or connect to that flow. Written for [P1-M1](phase-1/milestone-01-overview.md) topic 1. It recommends nothing final; decisions are made in P1-M2.
+How Claude Code and Codex CLI raise an approval, how they block and resume, and where a third-party app can intercept or connect to that flow. Written for [P1-M1](archive/phases/phase-1/milestone-01-overview.md) topic 1. It recommends nothing final; decisions are made in P1-M2.
 
-Accepted by the owner on 2026-10-07 as the record of what was found. Where an owner decision in the [Phase 1 changelog](phase-1/changelog.md) conflicts with a recommendation here, the decision wins.
+Accepted by the owner on 2026-10-07 as the record of what was found. Where an owner decision in the [Phase 1 changelog](archive/phases/phase-1/changelog.md) conflicts with a recommendation here, the decision wins.
 
 ## Method
 

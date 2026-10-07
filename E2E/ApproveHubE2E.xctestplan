@@ -1,0 +1,28 @@
+{
+  "configurations" : [
+    {
+      "id" : "9B76B2AA-0D5A-44C2-8603-19B90DDEC90A",
+      "name" : "Default",
+      "options" : {
+        "targetForVariableExpansion" : {
+          "containerPath" : "container:ApproveHubE2E.xcodeproj",
+          "identifier" : "4DE991070000000000000001",
+          "name" : "ApproveHubE2EHost"
+        }
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "testExecutionOrdering" : "random"
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:ApproveHubE2E.xcodeproj",
+        "identifier" : "4DE991070000000000000002",
+        "name" : "ApproveHubE2ETests"
+      }
+    }
+  ],
+  "version" : 1
+}

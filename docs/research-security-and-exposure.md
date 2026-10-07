@@ -2,15 +2,15 @@
 
 Status: Active
 
-How each kind of client could authenticate to the ApproveHub API, how far the API could be exposed (this Mac only, the local network, or beyond), and how approvals could resist spoofing and replay. Written for [P1-M1](phase-1/milestone-01-overview.md) topic 5. It lists threats, options and evidence, and decides nothing; P1-M2 decides.
+How each kind of client could authenticate to the ApproveHub API, how far the API could be exposed (this Mac only, the local network, or beyond), and how approvals could resist spoofing and replay. Written for [P1-M1](archive/phases/phase-1/milestone-01-overview.md) topic 5. It lists threats, options and evidence, and decides nothing; P1-M2 decides.
 
-Accepted by the owner on 2026-10-07 as the record of what was found. Where an owner decision in the [Phase 1 changelog](phase-1/changelog.md) conflicts with a recommendation here, the decision wins.
+Accepted by the owner on 2026-10-07 as the record of what was found. Where an owner decision in the [Phase 1 changelog](archive/phases/phase-1/changelog.md) conflicts with a recommendation here, the decision wins.
 
 ## Method
 
 - **Sources:** vendor docs, Apple documentation data, the local `unix(4)` man page and IETF and MCP specifications, read on 2026-10-07 and listed under "Sources".
 - **Experiment:** one throwaway Unix-socket server in the session scratchpad, not in this repo. It asked the OS who was on the other end of each connection. Nothing was registered with the system and no credential was touched.
-- **Scope assumptions** (owner decisions of 2026-10-07, see [the milestone overview](phase-1/milestone-01-overview.md)): requesting apps are written only by the owner, one owner decides on their own devices, and remote access for iOS is researched both ways.
+- **Scope assumptions** (owner decisions of 2026-10-07, see [the milestone overview](archive/phases/phase-1/milestone-01-overview.md)): requesting apps are written only by the owner, one owner decides on their own devices, and remote access for iOS is researched both ways.
 - **Not tested:** TLS and certificate pinning, Bonjour, device pairing, Keychain access rules against other apps, and anything that needs a launch agent or a phone.
 - **Marking:** `Unverified` marks a claim without a primary source or an experiment. "Design reasoning" marks my own inference.
 

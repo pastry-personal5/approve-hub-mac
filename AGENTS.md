@@ -24,21 +24,21 @@ See [README.md](README.md) for the user-facing overview and [docs/product-behavi
 ## Decided — do not change without asking
 
 - **Technical stack:** Swift with SwiftPM, swift-format, SwiftLint and swift test.
-- **Product scope:** [product-behavior.md](docs/product-behavior.md). It covers what ApproveHub is, the API server and its clients, the threat model, agents, iOS, where the server runs and how it starts, the macOS 26 floor and own-Mac use, requests and expiry, fail-closed behavior, deciding (Touch ID, grants, digests) and history. The owner's decisions are dated in [docs/phase-1/changelog.md](docs/phase-1/changelog.md).
+- **Product scope:** [product-behavior.md](docs/product-behavior.md). It covers what ApproveHub is, the API server and its clients, the threat model, agents, iOS, where the server runs and how it starts, the macOS 26 floor and own-Mac use, requests and expiry, fail-closed behavior, deciding (Touch ID, grants, digests) and history. The owner's decisions are dated in [the Phase 1 changelog](docs/archive/phases/phase-1/changelog.md).
 - **Interaction model:** [ux-gui.md](docs/ux-gui.md). Component vocabulary is in [ux-terms.md](docs/ux-terms.md) and the layout containment model in [ux-information-architecture.md](docs/ux-information-architecture.md).
 - **License:** Apache-2.0 for all project code.
 - **Development process:** work is organized in numbered phases (Phase 1, 2, 3, …). Each phase has numbered milestones (Milestone 1, 2, 3, …), and milestone numbering restarts in every phase. Milestone IDs look like `P1-M2`. See [docs/development-process.md](docs/development-process.md).
-- **Server stack:** Hummingbird as the server and Swift OpenAPI Generator (a SwiftPM build plugin) with its runtime and transports are approved in principle. P1-M2 lists the exact packages, versions and licenses, and nothing is added to `Package.swift` before the milestone that needs it.
-- **Local transport:** apps and the GUI reach the server on a loopback port with a token, and the server checks the Origin header.
+- **Service architecture:** [architecture.md](docs/architecture.md) names **ApproveHub Service**, records the app-bundled helper lifecycle, fixed loopback transport, security model, persistence, package layout, and approved dependency versions.
 - **App build and signing:** a script in the repo builds the `.app` from the SwiftPM output and signs it ad-hoc. There is no App Sandbox, and no Developer ID signing or notarization, because the app runs only on the owner's own Macs. Script and file names follow the code naming rules below.
 
 ## Undecided — ask before inventing
 
-List open product and architecture questions here as they come up, and ask before building on one. P1-M1 adds the choices its research raises. P1-M2 decides them.
+List open product and architecture questions here as they come up, and ask before building on one. Phase 1 decisions are recorded in the [changelog](docs/archive/phases/phase-1/changelog.md).
 
-- **API server name:** decided in P1-M2. See [docs/phase-1/changelog.md](docs/phase-1/changelog.md).
-- **Integration styles:** which integration mechanisms to support first for agents (hook shim, host app, channel relay). Deferred with the known agents to later phases. See [research-agent-approval-flows.md](docs/research-agent-approval-flows.md).
-- **Exposure and iOS:** local network only or remote access, the relay route, the pairing method and the iOS minimum version. Needed only once an iOS client is planned, since iOS is not in the first release. See [research-security-and-exposure.md](docs/research-security-and-exposure.md) and [research-ios-client.md](docs/research-ios-client.md).
+- **Integration styles:** which mechanism to support first for agents (hook shim, host app, or channel relay). The owner approved deferral until the known agent integrations are planned. See [research-agent-approval-flows.md](docs/research-agent-approval-flows.md).
+- **Exposure and iOS:** LAN versus remote access, relay route, pairing method, and iOS minimum version. The owner approved deferral until an iOS client is planned, because the first release is Mac-only. See [research-security-and-exposure.md](docs/research-security-and-exposure.md) and [research-ios-client.md](docs/research-ios-client.md).
+- **Local service identity:** how clients verify the listener at the fixed loopback port before sending bearer credentials. The approved fail-closed rule requires this check; a response from the listener does not prove its identity. See [architecture.md](docs/architecture.md#hosting-model).
+- **Sensitive-decision proof:** whether the service trusts the Mac client's Touch ID gate within the approved threat model or requires a proof of user presence for each sensitive approval. A decider bearer credential alone does not attest Touch ID. See [architecture.md](docs/architecture.md#request-lifecycle-and-state-machine).
 
 ## Environment setup
 

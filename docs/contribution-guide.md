@@ -11,10 +11,22 @@ How to set up `approve-hub-mac`, validate a change, write commit messages, and o
 
 ```sh
 swift build                                        # build the app
-swift run                                          # run the app
+swift run approve-hub                              # run the app skeleton
+swift run approve-hub-service                      # run the service skeleton
 swift test                                         # run the tests
 swift format --in-place --recursive Sources Tests  # format the code
 swiftlint lint --strict                            # lint with warnings treated as errors
+```
+
+The same commands are available through Make:
+
+```sh
+make build
+make run
+make test
+make format
+make lint
+make check
 ```
 
 ## Required validation
@@ -26,6 +38,22 @@ swift format lint --strict --recursive Sources Tests
 swiftlint lint --strict
 swift test
 ```
+
+## Bundled-app E2E host
+
+`E2E/ApproveHubE2E.xcodeproj` is the minimal XCTest/XCUIAutomation host for
+the bundled-app suite. It reserves injected biometric and notification ports;
+the test is skipped until those adapters and the bundle launcher exist.
+
+After building the app bundle, run the host manually:
+
+```sh
+xcodebuild -project E2E/ApproveHubE2E.xcodeproj -scheme ApproveHubE2ETests \
+  -testPlan ApproveHubE2E -destination 'platform=macOS' test
+```
+
+Test real Touch ID and notification authorization manually. They are system
+dialogs and are not automated by this host.
 
 ## Commit messages
 

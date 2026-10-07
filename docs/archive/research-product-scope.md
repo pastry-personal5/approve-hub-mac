@@ -2,7 +2,7 @@
 
 Status: Superseded by [product-behavior.md](../product-behavior.md)
 
-Proposed text for [product-behavior.md](../product-behavior.md), assembled from the owner's statements in the [Phase 1 changelog](../phase-1/changelog.md) and from what the P1-M1 research implies. Nothing here is decided until the owner accepts text into `product-behavior.md`, which AGENTS.md lists as a Decided doc.
+Proposed text for [product-behavior.md](../product-behavior.md), assembled from the owner's statements in the [Phase 1 changelog](phases/phase-1/changelog.md) and from what the P1-M1 research implies. Nothing here is decided until the owner accepts text into `product-behavior.md`, which AGENTS.md lists as a Decided doc.
 
 ## Where each statement comes from
 
@@ -58,4 +58,4 @@ These are not answered by anything the owner has said:
 
 ## How to accept this
 
-Mark which statements are wrong or missing, and answer the open questions you want settled now. Accepted text is moved into `product-behavior.md`, this doc's status becomes `Archived`, and the acceptance is logged in the [changelog](../phase-1/changelog.md).
+Mark which statements are wrong or missing, and answer the open questions you want settled now. Accepted text is moved into `product-behavior.md`, this doc's status becomes `Archived`, and the acceptance is logged in the [changelog](phases/phase-1/changelog.md).

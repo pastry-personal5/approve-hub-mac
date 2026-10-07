@@ -4,6 +4,10 @@ ApproveHub is a secure app for approving what your AI agents ask to do, written 
 
 **AI asks. You decide. Your agent continues.**
 
+ApproveHub’s Mac client communicates with the local **ApproveHub Service**. The
+service architecture and its current implementation boundaries are documented in
+[docs/architecture.md](docs/architecture.md).
+
 ## Requirements
 
 macOS 26 or later.
