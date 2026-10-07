@@ -1,0 +1,8 @@
+excluded:
+  - .build
+  - .swiftpm
+  - DerivedData
+
+# swift-format adds trailing commas to multi-line collections, so require them.
+trailing_comma:
+  mandatory_comma: true
