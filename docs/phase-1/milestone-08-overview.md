@@ -2,7 +2,7 @@
 
 Status: Planned
 
-Build the [M3](milestone-03-overview.md) owner-approved single-window design against the service API. Write this milestone's technical approach before activation.
+Build the [M3](milestone-03-overview.md) owner-approved single-window design against the service API. The [technical approach](milestone-08-architecture.md) records its client boundary, trust path, and acceptance evidence.
 
 ## Goal
 

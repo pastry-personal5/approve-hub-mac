@@ -60,7 +60,7 @@ Plan: [overview](milestone-07-overview.md), [architecture](milestone-07-architec
 ### P1-M8: Mac approval window
 Status: Planned
 Goal: Show and decide live pending requests in the Mac GUI.
-Plan: [overview](milestone-08-overview.md); technical approach before activation.
+Plan: [overview](milestone-08-overview.md), [architecture](milestone-08-architecture.md)
 
 ### P1-M9: Bundle and launch
 Status: Planned

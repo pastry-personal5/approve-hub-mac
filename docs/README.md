@@ -30,6 +30,7 @@ This index lists the design and process docs, one line each. Read only the doc y
 | [phase-1/milestone-07-overview.md](phase-1/milestone-07-overview.md) | Completed P1-M7 service API scope and acceptance evidence. |
 | [phase-1/milestone-07-architecture.md](phase-1/milestone-07-architecture.md) | Implemented P1-M7 loopback HTTP service, authorization, and SSE replay. |
 | [phase-1/milestone-08-overview.md](phase-1/milestone-08-overview.md) | Planned P1-M8 Mac approval window and acceptance evidence. |
+| [phase-1/milestone-08-architecture.md](phase-1/milestone-08-architecture.md) | Planned P1-M8 SwiftUI decider client, request window, and SSE recovery approach. |
 | [phase-1/milestone-09-overview.md](phase-1/milestone-09-overview.md) | Planned P1-M9 bundle and launch and acceptance evidence. |
 | [phase-1/milestone-10-overview.md](phase-1/milestone-10-overview.md) | Planned P1-M10 early-release acceptance and closeout. |
 | [phase-1/changelog.md](phase-1/changelog.md) | Active Phase 1 decisions, owner calls, and design changes. |
