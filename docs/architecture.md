@@ -2,7 +2,7 @@
 
 Status: Active
 
-ApproveHub is a macOS consent service for cooperative agents. This document records the approved component architecture and distinguishes the [early Phase 1 release](phase-1/phase-1.md) from later approved capabilities. The [canonical OpenAPI contract](../Sources/openapi.yaml) owns endpoint schemas. The current SwiftPM targets are service and GUI skeletons with generated bindings; [P1-M3](phase-1/milestone-03-overview.md) approved the first-run trust path before implementation.
+ApproveHub is a macOS consent service for cooperative agents. This document records the approved component architecture and distinguishes the [early Phase 1 release](phase-1/phase-1.md) from later approved capabilities. The [canonical OpenAPI contract](../Sources/openapi.yaml) owns endpoint schemas. The SwiftPM service now runs the generated API over loopback; the GUI remains a skeleton. [P1-M3](phase-1/milestone-03-overview.md) approved the first-run trust path before implementation.
 
 ## Components and boundaries
 
@@ -27,7 +27,7 @@ The service binds only to `127.0.0.1:46931`. Before every bearer-bearing request
 
 ## Request lifecycle and state machine
 
-The lifecycle actor owns all transitions. A request begins `pending`, uses a two-minute default expiry (at most ten minutes when requested), and ends exactly once. It resolves races between decisions, cancellation, and expiry atomically, so no later operation changes a terminal outcome.
+The `ApproveHubCore` lifecycle actor owns all transitions in memory. A request begins `pending`, uses a two-minute default expiry (at most ten minutes when requested), and ends exactly once. It resolves races between decisions, cancellation, and expiry atomically, so no later operation changes a terminal outcome. Its [M5 design and test evidence](phase-1/milestone-05-architecture.md) cover idempotency, text safety, monotonic deadlines, waits, and transition revisions.
 
 ```mermaid
 stateDiagram-v2
@@ -60,11 +60,11 @@ Requester tokens are distinct, revocable bearer capabilities, scoped to their re
 
 ### Service identity, pins, and credentials
 
-Before the service accepts traffic, the owner runs explicit local CLI setup. It creates one persistent Ed25519 service signing key in owner-only Application Support storage, stores only a password-quality hash of a separate random GUI decider credential, and writes the GUI copy plus the initial service pin to Keychain. Setup creates no requester credentials. An uninitialized service does not bind the loopback port or accept an unauthenticated setup request; a GUI-launched helper reports that state so the GUI can show Setup Required and its CLI next step.
+Before the service accepts traffic, the owner runs explicit local CLI setup. It creates one persistent Ed25519 service signing key in owner-only Application Support storage, stores only a password-quality hash of a separate random GUI decider credential, and writes the GUI copy plus the initial service pin to Keychain. Setup creates no requester credentials. An explicit repeat setup restores a missing GUI pin from the trusted local key without changing credentials. An uninitialized service does not bind the loopback port or accept an unauthenticated setup request; a GUI-launched helper reports that state so the GUI can show Setup Required and its CLI next step.
 
 The pin is a versioned public document containing `ed25519`, the raw 32-byte Ed25519 public key, and its key identifier. Raw public keys, raw 64-byte Ed25519 signatures, and the SHA-256 key identifier use unpadded base64url; the key identifier is the SHA-256 digest of the raw public-key bytes. The owner obtains it as CLI text plus a grouped hexadecimal fingerprint and transfers it independently to each requester. Pins are never learned from a listener, a normal API response, or an automatic key-change prompt.
 
-Key rotation is an owner-initiated hard cutover: the local command creates a new key, replaces the GUI pin, and exports the replacement pin. Existing clients fail closed until the owner installs the replacement. A requester-token replacement revokes the previous token. If the GUI credential is missing or rejected, the GUI first verifies its pinned service proof, then may invoke its bundled local helper to revoke and replace that credential and its Keychain item. No identity failure triggers automatic credential recovery.
+Key rotation is an owner-initiated hard cutover performed while the service is stopped: the local command creates a new key, replaces the GUI pin, and exports the replacement pin. Existing clients fail closed until the owner installs the replacement. Active requester names are unique. Requester registration and revocation take effect on the next authenticated operation without restarting the service. A lost requester token is replaced by revoking its old ID and adding a new ID, which cannot access requests owned by the old one. Revocation cancels that requester's pending requests and prevents a decision or in-flight wait from delivering approval after the revocation commits. If cancellation is not acknowledged, the CLI stops the verified service, discarding process-local requests and outcomes. If the GUI credential is missing or rejected, the GUI first verifies its pinned service proof, then may invoke its bundled local helper to revoke and replace that credential and its Keychain item. No identity failure triggers automatic credential recovery. The [M6 technical approach](phase-1/milestone-06-architecture.md) specifies the credential-store and CLI plan.
 
 For every bearer-bearing request, a client creates a new 32-byte CSPRNG challenge and first obtains a proof. The service RFC 8785-canonicalizes as UTF-8 and signs a payload containing exactly the protocol label `approvehub-service-proof-v1`, fixed listener `http://127.0.0.1:46931`, key identifier, challenge, issued-at time, and expiry no more than 60 seconds after issue. The client accepts the challenge once and only within that 60-second window. Before sending its bearer token, it verifies protocol, listener, installed key identifier, unused challenge, time window, and the Ed25519 signature over the canonical payload. Any malformed encoding, replay, missing or wrong pin, unknown listener, timeout, or port collision prevents credential disclosure. The client discards the challenge after use; it never reuses challenges across retries.
 
@@ -87,7 +87,7 @@ Hook shims, host-app adapters, and channel relays for Claude Code and Codex CLI 
 | `ApproveHubService` | Service executable plus HTTP, credential persistence, Keychain, and logging adapters; later rules and history storage. |
 | `ApproveHub` | SwiftUI macOS client plus API client and Keychain adapters; later notification and biometric adapters. |
 
-`ApproveHubContract` is the sharing point for the service, Mac GUI, and future iOS client. The package now runs the generator plugin in all three API-facing targets, with target-local symlinks to the single source spec and target-specific configurations. Generated files are build outputs only. The executable skeletons still contain no server or GUI behavior.
+`ApproveHubContract` is the sharing point for the service, Mac GUI, and future iOS client. The package runs the generator plugin in all three API-facing targets, with target-local symlinks to the single source spec and target-specific configurations. Generated files are build outputs only. `ApproveHubService` implements the generated server interface; the GUI executable remains a skeleton.
 
 ## Concurrency and errors
 
@@ -115,6 +115,6 @@ The package selection, platform implications, and license evidence are in [resea
 
 ## Test strategy
 
-Phase 1 coverage is layered: M4 contract checks compile generated interfaces and validate examples, digest representation, errors, and replay declarations; M5 adds unit tests for lifecycle transitions, expiry, first-decision-wins races, sensitive rejection, and digest mismatches; M6–M7 add service tests for token scope, identity verification before credential disclosure, credential persistence, and port-collision failure, plus HTTP/SSE tests for Problem Details, role-scoped event delivery, replay, and refresh after replay loss or restart. Grant exclusion, rules, history migration, and retention tests belong with their later features.
+Phase 1 coverage is layered: M4 contract checks compile generated interfaces and validate examples, digest representation, errors, and replay declarations; M5 unit tests cover lifecycle transitions, expiry, first-decision-wins races, sensitive rejection, and digest mismatches; M6–M7 add service tests for token scope, identity verification before credential disclosure, credential persistence, and port-collision failure, plus HTTP/SSE tests for Problem Details, role-scoped event delivery, replay, and refresh after replay loss or restart. Grant exclusion, rules, history migration, and retention tests belong with their later features.
 
 A minimal Xcode XCTest/XCUIAutomation host is scaffolded for bundled-app end-to-end coverage. Its placeholder is replaced with a running requester-to-GUI-to-requester test by P1-M10; Phase 1 does not depend on biometric or notification adapters. Real Touch ID and notification authorization are later manual checks. The [local validation gate](contribution-guide.md#required-validation) applies; no CI or scheduled local job was added in P1-M2.

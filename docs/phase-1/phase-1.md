@@ -43,19 +43,19 @@ Goal: Define and verify the `/v1` contract for identity, requester and decider o
 Plan: [overview](milestone-04-overview.md), [architecture](milestone-04-architecture.md)
 
 ### P1-M5: Request lifecycle
-Status: Planned
+Status: Done
 Goal: Implement immutable ordinary requests and fail-closed lifecycle transitions.
-Plan: [overview](milestone-05-overview.md); technical approach before activation.
+Plan: [overview](milestone-05-overview.md), [architecture](milestone-05-architecture.md)
 
 ### P1-M6: Identity and credentials
-Status: Planned
+Status: Done
 Goal: Persist service and role credentials and provide owner credential commands.
-Plan: [overview](milestone-06-overview.md); technical approach before activation.
+Plan: [overview](milestone-06-overview.md), [architecture](milestone-06-architecture.md)
 
 ### P1-M7: ApproveHub Service
-Status: Planned
+Status: Done
 Goal: Serve the role-scoped API with bounded waits, events, stable errors, and fail-closed hosting.
-Plan: [overview](milestone-07-overview.md); technical approach before activation.
+Plan: [overview](milestone-07-overview.md), [architecture](milestone-07-architecture.md)
 
 ### P1-M8: Mac approval window
 Status: Planned

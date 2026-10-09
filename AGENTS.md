@@ -14,6 +14,10 @@ Agent entry point for `approve-hub-mac`. Leave the `CLAUDE.md` import stub uncha
 - **First-run trust:** the owner-approved bootstrap, pin distribution,
   Ed25519 proof, recovery, and rotation path is in
   [architecture](docs/architecture.md#service-identity-pins-and-credentials).
+  The [P1-M6 technical approach](docs/phase-1/milestone-06-architecture.md)
+  records the accepted CLI names, live requester changes, stopped-service rotation,
+  new-ID token replacement, unique active names, explicit pin repair, and
+  pending cancellation or verified service shutdown on revocation.
 - **Later sensitive approvals:** the selected request-bound, Touch ID-protected signing-proof direction is recorded in the [request lifecycle](docs/architecture.md#request-lifecycle-and-state-machine); Phase 1 rejects sensitive requests.
 - **Interface:** [GUI behavior](docs/ux-gui.md), [terms](docs/ux-terms.md), and [layout](docs/ux-information-architecture.md).
 - **Stack, licensing, and build process:** [contribution guide](docs/contribution-guide.md).

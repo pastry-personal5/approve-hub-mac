@@ -64,6 +64,10 @@ let package = Package(
     ),
     .testTarget(name: "ApproveHubCoreTests", dependencies: ["ApproveHubCore"]),
     .testTarget(
+      name: "ApproveHubServiceTests",
+      dependencies: ["ApproveHubService", "ApproveHubCore", "ApproveHubContract"]
+    ),
+    .testTarget(
       name: "ApproveHubContractTests",
       dependencies: [
         "ApproveHubContract",
